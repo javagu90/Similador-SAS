@@ -1,0 +1,54 @@
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.*;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import java.util.*;
+import javax.swing.text.*;
+import javazoom.jl.player.Player;
+
+public class Alarma {
+    //-->> t cambie esto
+    private String filename; //antes tenia: private String filename;
+    private Player player; 
+
+    //-->> t cambie el contructor
+    public Alarma(String filename)//antes tenia: public MP3(String filename)
+    {
+     this.filename = filename;
+    }
+
+    public void close()
+    { 
+    if (player != null) player.close();
+    }
+
+     public void play()
+    {
+      try {
+           FileInputStream fis     = new FileInputStream(filename);
+           BufferedInputStream bis = new BufferedInputStream(fis);
+           player = new Player(bis);
+           }
+      catch (Exception e)
+       {
+        System.out.println("No se puede reproducir nada porque no se abrio un archivo mp3");
+       }
+
+    
+    new Thread()
+     {
+      public void run()
+       {
+        try
+          { 
+            player.play();
+          }
+        catch (Exception e)
+           { System.out.println(); }
+       }
+      }.start();
+      
+    }
+}

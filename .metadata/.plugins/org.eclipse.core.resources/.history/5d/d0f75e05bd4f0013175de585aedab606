@@ -1,0 +1,74 @@
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.Toolkit;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+
+public class ReceptorAlarma extends JFrame
+{
+	public Container contenedor;
+	public JPanel panel;
+	public JTextArea etiqueta;
+	public StringBuilder mensaje;
+	public Font fuente;
+	
+	public ReceptorAlarma ()
+	{
+		  super("Receptor-Alarma");
+		  
+		  contenedor = getContentPane();
+		  contenedor.setLayout(new BorderLayout());
+		  
+		  panel=new JPanel(new FlowLayout());
+		  
+		  fuente=new Font("Arial", 0, 20);
+		  
+		  etiqueta=new JTextArea(50,20);
+		  //etiqueta.setText(mensaje.toString());
+		  etiqueta.setOpaque(false);
+		  etiqueta.setEditable(false);
+		  etiqueta.setLineWrap(true);
+		  etiqueta.setFont(fuente);
+		  
+		  panel.add(etiqueta);
+		  
+		  contenedor.add(panel, BorderLayout.CENTER);
+		  
+		  setSize(700, 250);
+		  
+		  Dimension dim_pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+		      
+		  // Una cuenta para situar la ventana en el centro de la pantalla.
+		  setLocation( (dim_pantalla.width - this.getWidth())   / 2,
+		               (dim_pantalla.height - this.getHeight()) / 2);
+		  setVisible(false);
+		  setResizable(false);
+	}
+	
+	public void tipoAlarma(int escala)
+	{
+		mensaje=new StringBuilder();
+		if(escala>=6)
+		{
+			etiqueta.setForeground(Color.RED);
+			mensaje.append("ALARMA!!! EVACUE LA ZONA");
+			etiqueta.setText(mensaje.toString());
+			this.setVisible(true);
+			mensaje.delete(0, mensaje.length());
+		}
+		else
+		{
+			etiqueta.setForeground(Color.BLACK);
+			mensaje.append("Alarma preventiva");
+			etiqueta.setText(mensaje.toString());
+			this.setVisible(true);
+			mensaje.delete(0, mensaje.length());
+		}
+	}
+}

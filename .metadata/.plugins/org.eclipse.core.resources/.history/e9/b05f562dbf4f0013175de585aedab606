@@ -1,0 +1,19 @@
+public class ReceptorAlarma
+{
+	public StringBuilder mensaje;
+	
+	public void tipoAlarma(int escala)
+	{
+		mensaje=new StringBuilder();
+		if(escala>=6)
+		{
+			mensaje.append("ALARMA!!! EVACUE LA ZONA");
+			mensaje.delete(0, mensaje.length());
+		}
+		else
+		{
+			mensaje.append("Alarma preventiva");
+			mensaje.delete(0, mensaje.length());
+		}
+	}
+}

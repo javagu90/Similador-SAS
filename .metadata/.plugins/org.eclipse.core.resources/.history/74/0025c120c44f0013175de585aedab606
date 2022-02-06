@@ -1,0 +1,46 @@
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+
+public class Alarma 
+{
+ private String filename;
+ private Player player; 
+ 	
+ public Alarma(String filename)
+ {
+  this.filename = filename;
+ }
+ 
+ public void close()
+ { 
+  if (player != null) player.close();
+ }
+
+ public void play()
+ {
+  try 
+  {
+   FileInputStream fis     = new FileInputStream(filename);
+   BufferedInputStream bis = new BufferedInputStream(fis);
+   player = new Player(bis);
+  }
+  catch (Exception e)
+  {
+   System.out.println("No se puede reproducir nada porque no se abrio un archivo mp3");
+  }
+  new Thread()
+  {
+   public void run()
+   {
+    try
+    { 
+     player.play();
+    }
+    catch (Exception e)
+    { 
+     System.out.println(); 
+    }
+   }
+  }.start();
+ }
+}
